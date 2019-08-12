@@ -1,9 +1,9 @@
 <?php
 	session_start();
 	
-	$host = "localhost";
+	$host = "examapplicationphp-mysqldbserver.mysql.database.azure.com";
 	$database = "dbfinalexam";
-	$user = "root";
-	$password = "";
+	$user = "yye2942@examapplicationphp-mysqldbserver";
+	$password = "skatkwkd309^^";
 
 	$connection = mysqli_connect($host, $user, $password, $database);
