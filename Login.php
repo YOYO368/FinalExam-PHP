@@ -2,8 +2,7 @@
 
 if(isset($_POST['login_btn'])) 
 {
-    require('../database.php');
-	global $connection;
+    include 'database.php';
 
     if(isset($_POST['userId']))
      {
@@ -28,15 +27,18 @@ if(isset($_POST['login_btn']))
 	if($result == false) {
 		 echo "error: " . mysqli_error($connection);
 	}
-	if ($result->num_rows > 0) {
-		session_start();
+	else
+	{
+		if ($result->num_rows > 0) {
 		while($row = mysqli_fetch_row($result)) {
 			$_SESSION['User_ID'] = $row[0];
+			$_SESSION['userPassword'] = $row[1];
 		}
-		echo "true";
-	}
-	else {
-		echo "false";
+			header("Location: Index.php");
+		}
+		else {
+			echo "false";
+		}		
 	}
 }
 ?>

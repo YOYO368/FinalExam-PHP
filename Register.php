@@ -2,9 +2,8 @@
  
     if(isset($_POST['register_btn']))
     {
-        require('../database.php');
-	    global $connection;
-
+		include 'database.php';
+	
         $userId = $_POST['userId'];
         $password = $_POST['password'];
         $password2 = $_POST['password2'];
@@ -32,39 +31,39 @@
             $query = "Select customerId from tbcustomer where customerId = '" .$userId. "';";
 	
 			$result = mysqli_query($connection, $query);
-             if ($result = $mysqli->query($query)) {
-                while ($row = $result->fetch_assoc()) {
-                    $User_Name = $row['customerId'];
+
+			if($result->num_rows > 0) {
+				while($row = mysqli_fetch_row($userInfo)) {
+                $User_Name = $row['customerId'];
  
                     if($User_Name == $userId) 
                     {
                         $_SESSION['message'] = "'$userId' is already exist";
-                        $mysqli->close();
                         header("Location: Index.php");
                         exit();
                     }
-                }
-            }
-            if($password == $password2)
-            {
-                $sql = "INSERT INTO user_info(customerId, customerPassword, email,phoneNumber) VALUES('$userId','$password','$email','$phonenumber')";
-                $result = mysqli_query($connection, $query);
-                $mysqli->close();
-                if (!$result) {
-                    echo "<div id='error_msg'>". $con->error."</div>";
-                    exit();
-                }
-                else
-                {
-                    $_SESSION['message'] = "Register success !!!!!!!!!!!!!";
-                    header("Location: Login.php");
-                }
-            }
-            else
-            {
-                $mysqli->close();
-                echo "<script>alert('The two passwords do not match. Try to check again');</script>";
-            }  
+				}
+			}
+			else
+			{
+				if($password == $password2)
+				{
+					$query = "INSERT INTO tbcustomer(customerId, customerPassword, email,phoneNumber) VALUES('$userId',SHA1(UNHEX(SHA1('$password'))),'$email','$phonenumber')";
+					$result = mysqli_query($connection, $query);
+					if (!$result) {
+						echo "<script>alert('Error');</script>";
+					}
+					else
+					{
+						$_SESSION['message'] = "Register success !!!!!!!!!!!!!";
+						header("Location: Login.php");
+					}
+				}
+				else
+				{
+					  echo "<script>alert('The two passwords do not match. Try to check again');</script>";
+				}  
+			}
         }
      }
 ?>
