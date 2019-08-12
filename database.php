@@ -2,7 +2,7 @@
 	session_start();
 	
 	$host = "examapplicationphp-mysqldbserver.mysql.database.azure.com";
-	$database = "dbfinalexam";
+	$database = "dbFinalExam";
 	$user = "yye2942@examapplicationphp-mysqldbserver";
 	$password = "skatkwkd309^^";
 
