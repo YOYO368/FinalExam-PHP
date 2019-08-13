@@ -4,5 +4,6 @@
 	$_SESSION["User_ID"] = "";
 	$_SESSION['message'] = "You are now Logged out";
 	header("Location: Index.php");
+
 	exit();
 ?>
